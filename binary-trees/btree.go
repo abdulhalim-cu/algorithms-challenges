@@ -42,6 +42,47 @@ func depthFirstValues(n *Node) []string {
 	return result
 }
 
+// iterative version
+/*
+func treeIncludes(n *Node, targetVal string) bool {
+	if n == nil {
+		return false
+	} else if n.Val == targetVal {
+		return true
+	}
+	queue := []*Node{n}
+	found := false
+	for len(queue) > 0 {
+		curr := queue[0]
+		if curr.Left != nil && curr.Left.Val == targetVal {
+			found = true
+			break
+		} else if curr.Right != nil && curr.Right.Val == targetVal {
+			found = true
+			break
+		}
+		queue = queue[1:]
+		if curr.Left != nil {
+			queue = append(queue, curr.Left)
+		}
+		if curr.Right != nil {
+			queue = append(queue, curr.Right)
+		}
+	}
+	return found
+}*/
+
+// Recursive version
+func treeIncludes(node *Node, targetVal string) bool {
+	if node == nil {
+		return false
+	}
+	if node.Val == targetVal {
+		return true
+	}
+	return treeIncludes(node.Left, targetVal) || treeIncludes(node.Right, targetVal)
+}
+
 func breathFirstValues(n *Node) []string {
 	if n == nil {
 		return []string{}
@@ -78,4 +119,8 @@ func main() {
 
 	fmt.Println(depthFirstValues(a))
 	fmt.Println(breathFirstValues(a))
+	fmt.Println(treeIncludes(b, "c"))
+	fmt.Println(treeIncludes(b, "e"))
+	fmt.Println(treeIncludes(c, "f"))
+	fmt.Println(treeIncludes(c, "g"))
 }
