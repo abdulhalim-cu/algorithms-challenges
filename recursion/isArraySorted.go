@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func isArraySorted(Arr []int, n int) bool {
-	if n == 1 {
+	if n <= 1 {
 		return true
 	}
 	if Arr[n-1] < Arr[n-2] {
@@ -17,4 +17,5 @@ func main() {
 	fmt.Println(isArraySorted(arr, len(arr)))
 	arr2 := []int{1, 3, 2, 5, 4, 6, 7, 8}
 	fmt.Println(isArraySorted(arr2, len(arr2)))
+	fmt.Println(isArraySorted([]int{}, len([]int{})))
 }
