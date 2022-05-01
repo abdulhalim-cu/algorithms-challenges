@@ -2,27 +2,28 @@ package main
 
 import "fmt"
 
-func connectedComponentsCount(graph map[string][]string) int {
-	var visited = make(map[string]bool)
-	count := 0
-
+func largestComponent(graph map[string][]string) int {
+	visited := make(map[string]bool)
+	size := 0
 	for node := range graph {
-		if explore(graph, node, visited) {
-			count++
+		currSize := exploreSize(graph, node, visited)
+		if currSize > size {
+			size = currSize
 		}
 	}
-	return count
+	return size
 }
 
-func explore(graph map[string][]string, node string, visited map[string]bool) bool {
+func exploreSize(graph map[string][]string, node string, visited map[string]bool) int {
 	if _, ok := visited[node]; ok {
-		return false
+		return 0
 	}
 	visited[node] = true
+	size := 1
 	for _, neighbor := range graph[node] {
-		explore(graph, neighbor, visited)
+		size += exploreSize(graph, neighbor, visited)
 	}
-	return true
+	return size
 }
 
 func main() {
@@ -35,7 +36,7 @@ func main() {
 		"3": {"2", "4"},
 		"4": {"3", "2"},
 	}
-	fmt.Println(connectedComponentsCount(graph))
+	fmt.Println(largestComponent(graph))
 
 	graph2 := map[string][]string{
 		"1": {"2"},
@@ -45,7 +46,8 @@ func main() {
 		"7": {"6", "8"},
 		"8": {"9", "7", "2"},
 	}
-	fmt.Println(connectedComponentsCount(graph2))
+
+	fmt.Println(largestComponent(graph2))
 
 	graph3 := map[string][]string{
 		"3": {},
@@ -57,8 +59,7 @@ func main() {
 		"1": {"2"},
 		"2": {"1"},
 	}
-
-	fmt.Println(connectedComponentsCount(graph3))
+	fmt.Println(largestComponent(graph3))
 
 	graph4 := map[string][]string{
 		"0": {"4", "7"},
@@ -70,7 +71,7 @@ func main() {
 		"7": {"0"},
 		"8": {},
 	}
-	fmt.Println(connectedComponentsCount(graph4))
+	fmt.Println(largestComponent(graph4))
 
-	fmt.Println(connectedComponentsCount(map[string][]string{}))
+	fmt.Println(largestComponent(map[string][]string{}))
 }
