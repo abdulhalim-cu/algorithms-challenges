@@ -1,0 +1,4 @@
+Graph is a collection of nodes and edges
+    graph = nodes + edges
+
+    edges = connection between nodes
